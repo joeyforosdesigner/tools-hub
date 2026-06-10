@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Repiping Cost Calculator | Instant Plumbing Estimates</title>
+<meta name="description" content="Estimate your home repiping cost instantly. Get accurate local price ranges for PEX, copper, or CPVC pipes by state.">
+<meta name="keywords" content="repiping cost, plumbing estimate, pipe replacement, PEX vs copper, home renovation">
+<meta property="og:title" content="House Repiping Cost Calculator | Instant Plumbing Estimates">
+<meta property="og:description" content="Estimate your home repiping cost instantly. Get accurate local price ranges for PEX, copper, or CPVC pipes by state.">
+<meta property="og:image" content="icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="">
+<link rel="manifest" href="manifest.json">
+<script src="config.js"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --radius: 18px; 
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+  --primary: #0284c7; 
+  --primary-hover: #0369a1; 
+  --primary-light: rgba(2, 132, 199, 0.15); 
+  --primary-glow: rgba(2, 132, 199, 0.4);
+}
+[data-theme="dark"] { 
+  --bg: #080c12; 
+  --bg2: #0e1420; 
+  --bg3: #141c2a; 
+  --border: rgba(255,255,255,0.07); 
+  --border-hover: rgba(255,255,255,0.15); 
+  --text: #eef2f8; 
+  --text2: #8a97aa; 
+  --text3: #4a5568; 
+  --card-bg: #0e1420; 
+  --card-hover: #131b29; 
+  --nav-bg: rgba(8,12,18,0.85); 
+  --shadow: 0 20px 60px rgba(0,0,0,0.4); 
+}
+[data-theme="light"] { 
+  --bg: #f4f7fb; 
+  --bg2: #ffffff; 
+  --bg3: #edf2f7; 
+  --border: rgba(0,0,0,0.07); 
+  --border-hover: rgba(0,0,0,0.15); 
+  --text: #0f172a; 
+  --text2: #4a5568; 
+  --text3: #a0aec0; 
+  --card-bg: #ffffff; 
+  --card-hover: #f8faff; 
+  --nav-bg: rgba(244,247,251,0.85); 
+  --shadow: 0 20px 60px rgba(0,0,0,0.08); 
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+  font-family: 'Satoshi', sans-serif; 
+  background: var(--bg); 
+  color: var(--text); 
+  min-height: 100vh; 
+  transition: background var(--transition), color var(--transition); 
+  overflow-x: hidden; 
+}
+
+h1,h2,h3,h4 { font-family: 'Clash Display', sans-serif; letter-spacing: -0.02em; }
+
+/* Navigation */
+nav { 
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; 
+  background: var(--nav-bg); backdrop-filter: blur(20px); 
+  border-bottom: 1px solid var(--border); 
+  padding: 0 40px; height: 64px; 
+  display: flex; align-items: center; justify-content: space-between; 
+}
+
+.nav-logo { 
+  font-family: 'Clash Display', sans-serif; font-size: 1.3rem; 
+  font-weight: 700; color: var(--text); text-decoration: none; 
+  display: flex; align-items: center; gap: 10px; 
+}
+
+.nav-dot { 
+  width: 8px; height: 8px; border-radius: 50%; 
+  background: var(--primary); flex-shrink: 0; 
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.theme-toggle { 
+  width: 40px; height: 40px; border-radius: 10px; 
+  border: 1px solid var(--border); background: var(--bg3); 
+  cursor: pointer; display: flex; align-items: center; 
+  justify-content: center; font-size: 1.1rem; 
+  transition: all var(--transition); 
+}
+
+.theme-toggle:hover { border-color: var(--border-hover); transform: rotate(15deg); }
+
+.ad-banner { display: none; }
+
+/* Main Layout */
+main { 
+  max-width: 1200px; margin: 0 auto; 
+  padding: 88px 40px 60px; 
+}
+
+.rpc-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.rpc-header {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rpc-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--text2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rpc-header p {
+  color: var(--text2);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Input Section */
+.rpc-input-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+}
+
+.rpc-form-group {
+  margin-bottom: 24px;
+}
+
+.rpc-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rpc-input-wrapper {
+  position: relative;
+}
+
+.rpc-input, .rpc-select {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 1rem;
+  transition: all var(--transition);
+  outline: none;
+}
+
+.rpc-input:focus, .rpc-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.rpc-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238a97aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* Material Cards */
+.rpc-material-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.rpc-material-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.rpc-material-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  background: var(--card-hover);
+}
+
+.rpc-material-card.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.1);
+}
+
+.rpc-material-card.active::after {
+  content: '✓';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.rpc-material-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.rpc-material-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.rpc-material-price {
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* Action Button */
+.rpc-btn-calc {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-top: 8px;
+  box-shadow: 0 10px 20px -5px var(--primary-glow);
+}
+
+.rpc-btn-calc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px var(--primary-glow);
+}
+
+.rpc-btn-calc:active {
+  transform: translateY(0);
+}
+
+/* Result Section */
+.rpc-result-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  position: sticky;
+  top: 100px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rpc-empty-state {
+  color: var(--text3);
+}
+
+.rpc-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* Progress Bar */
+.rpc-progress-container {
+  width: 100%;
+  margin-bottom: 32px;
+  display: none; /* Hidden by default */
+}
+
+.rpc-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rpc-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+}
+
+/* Price Display */
+.rpc-result-content {
+  width: 100%;
+  display: none; /* Hidden by default */
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rpc-price-label {
+  font-size: 0.9rem;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.rpc-price-range {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.rpc-price-range span {
+  color: var(--primary);
+}
+
+.rpc-breakdown {
+  width: 100%;
+  background: var(--bg3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.rpc-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.rpc-breakdown-row:last-child {
+  margin-bottom: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+}
+
+.rpc-breakdown-label { color: var(--text2); }
+.rpc-breakdown-val { color: var(--text); font-family: 'Satoshi', sans-serif; }
+
+.rpc-state-info {
+  font-size: 0.85rem;
+  color: var(--text3);
+  background: var(--primary-light);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+footer { 
+  border-top: 1px solid var(--border); 
+  padding: 32px 40px; text-align: center; 
+  color: var(--text3); font-size: 0.875rem; 
+}
+
+@media (max-width: 768px) { 
+  nav { padding: 0 20px; } 
+  main { padding: 80px 20px 40px; }
+  .rpc-container { grid-template-columns: 1fr; }
+  .rpc-result-panel { position: static; min-height: auto; }
+  .rpc-header h1 { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo"><span class="nav-dot"></span>RepipingCalc</a>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+</nav>
+<div class="ad-banner"></div>
+<main>
+  <div class="rpc-container">
+    <header class="rpc-header">
+      <h1>House Repiping Cost Calculator</h1>
+      <p>Get an instant, accurate estimate for replacing your home's plumbing pipes based on your location and material choice.</p>
+    </header>
+
+    <!-- Input Section -->
+    <section class="rpc-input-panel">
+      <div class="rpc-form-group">
+        <label class="rpc-label" for="sqft">Home Square Footage</label>
+        <div class="rpc-input-wrapper">
+          <input type="number" id="sqft" class="rpc-input" placeholder="e.g. 1500" min="100">
+        </div>
+      </div>
+
+      <div class="rpc-form-group">
+        <label class="rpc-label" for="bathrooms">Number of Bathrooms</label>
+        <div class="rpc-input-wrapper">
+          <input type="number" id="bathrooms" class="rpc-input" placeholder="e.g. 2" min="1" max="10">
+        </div>
+      </div>
+
+      <div class="rpc-form-group">
+        <label class="rpc-label">Pipe Material</label>
+        <div class="rpc-material-grid">
+          <div class="rpc-material-card active" data-material="pex" data-cost="4.00">
+            <span class="rpc-material-icon">🔵</span>
+            <div class="rpc-material-name">PEX</div>
+            <div class="rpc-material-price">Most Affordable</div>
+          </div>
+          <div class="rpc-material-card" data-material="copper" data-cost="8.50">
+            <span class="rpc-material-icon">🟠</span>
+            <div class="rpc-material-name">Copper</div>
+            <div class="rpc-material-price">Premium</div>
+          </div>
+          <div class="rpc-material-card" data-material="cpvc" data-cost="3.00">
+            <span class="rpc-material-icon">⚪</span>
+            <div class="rpc-material-name">CPVC</div>
+            <div class="rpc-material-price">Budget</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rpc-form-group">
+        <label class="rpc-label" for="state">Your State</label>
+        <div class="rpc-input-wrapper">
+          <select id="state" class="rpc-select">
+            <option value="" disabled selected>Select State</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="rpc-btn-calc" id="calculateBtn">Calculate Estimate</button>
+    </section>
+
+    <!-- Result Section -->
+    <section class="rpc-result-panel">
+      <!-- Empty State -->
+      <div class="rpc-empty-state" id="emptyState">
+        <div class="rpc-empty-icon">🏠</div>
+        <p>Enter your home details to see your estimated repiping cost.</p>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="rpc-progress-container" id="progressContainer">
+        <div class="rpc-progress-bar">
+          <div class="rpc-progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="rpc-result-content" id="resultContent">
+        <div class="rpc-price-label">Estimated Total Cost</div>
+        <div class="rpc-price-range" id="priceDisplay">$0 - $0</div>
+        
+        <div class="rpc-breakdown">
+          <div class="rpc-breakdown-row">
+            <span class="rpc-breakdown-label">Materials</span>
+            <span class="rpc-breakdown-val" id="materialCost">$0</span>
+          </div>
+          <div class="rpc-breakdown-row">
+            <span class="rpc-breakdown-label">Labor</span>
+            <span class="rpc-breakdown-val" id="laborCost">$0</span>
+          </div>
+          <div class="rpc-breakdown-row">
+            <span class="rpc-breakdown-label">Total</span>
+            <span class="rpc-breakdown-val" id="totalCost">$0</span>
+          </div>
+        </div>
+
+        <div class="rpc-state-info" id="stateInfo">Regional rates applied</div>
+      </div>
+    </section>
+  </div>
+</main>
+<div class="ad-banner"></div>
+<footer>© <script>document.write(new Date().getFullYear())</script> RepipingCalc — All rights reserved.</footer>
+
+<script>
+// Theme toggle — NE PAS MODIFIER
+const _th = document.getElementById('themeToggle');
+const _html = document.documentElement;
+const _saved = localStorage.getItem('theme') || 'dark';
+_html.setAttribute('data-theme', _saved);
+_th.textContent = _saved === 'dark' ? '🌙' : '☀️';
+_th.addEventListener('click', () => {
+  const _next = _html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  _html.setAttribute('data-theme', _next);
+  _th.textContent = _next === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('theme', _next);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Configuration des données
+    const STATE_MULTIPLIERS = {
+        'AL': 0.90, 'AK': 1.20, 'AZ': 1.05, 'AR': 0.85, 'CA': 1.35, 'CO': 1.10, 'CT': 1.25, 'DE': 1.05,
+        'FL': 1.10, 'GA': 0.95, 'HI': 1.40, 'ID': 0.95, 'IL': 1.15, 'IN': 0.95, 'IA': 0.90, 'KS': 0.90,
+        'KY': 0.90, 'LA': 0.95, 'ME': 1.10, 'MD': 1.15, 'MA': 1.30, 'MI': 1.00, 'MN': 1.05, 'MS': 0.85,
+        'MO': 0.90, 'MT': 0.95, 'NE': 0.90, 'NV': 1.10, 'NH': 1.15, 'NJ': 1.30, 'NM': 0.95, 'NY': 1.35,
+        'NC': 1.00, 'ND': 0.90, 'OH': 1.00, 'OK': 0.85, 'OR': 1.15, 'PA': 1.10, 'RI': 1.25, 'SC': 0.95,
+        'SD': 0.85, 'TN': 0.90, 'TX': 1.05, 'UT': 1.05, 'VT': 1.15, 'VA': 1.10, 'WA': 1.20, 'WV': 0.90,
+        'WI': 1.05, 'WY': 0.95, 'DC': 1.35
+    };
+
+    const MATERIAL_RATES = {
+        'PEX': {
+            name: 'PEX (Cross-linked Polyethylene)',
+            materialCostPerSqFt: 2.50,
+            laborCostPerSqFt: 4.00,
+            fixtureCost: 150
+        },
+        'Copper': {
+            name: 'Copper',
+            materialCostPerSqFt: 8.00,
+            laborCostPerSqFt: 7.00,
+            fixtureCost: 250
+        },
+        'CPVC': {
+            name: 'CPVC (Chlorinated Polyvinyl Chloride)',
+            materialCostPerSqFt: 3.50,
+            laborCostPerSqFt: 4.50,
+            fixtureCost: 175
+        }
+    };
+
+    // Sélecteurs DOM
+    const sqftInput = document.getElementById('sqft');
+    const bathroomsInput = document.getElementById('bathrooms');
+    const materialSelect = document.getElementById('material'); 
+    const stateSelect = document.getElementById('state');
+    const container = document.getElementById('rpc-container');
+
+    // Initialisation des sélecteurs si les IDs ne sont pas explicitement fournis dans la liste mais nécessaires
+    // On tente de les trouver par attribut name ou classe si l'ID manque, par sécurité
+    const getMaterialSelect = () => document.getElementById('material') || document.querySelector('select[name="material"]');
+    const getStateSelect = () => document.getElementById('state') || document.querySelector('select[name="state"]');
+
+    // Fonction de formatage monétaire
+    const formatCurrency = (num) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(num);
+    };
+
+    // Fonction principale de calcul
+    const calculateCost = () => {
+        const sqft = parseFloat(sqftInput.value) || 0;
+        const bathrooms = parseInt(bathroomsInput.value) || 0;
+        const materialKey = getMaterialSelect()?.value || 'PEX';
+        const stateKey = getStateSelect()?.value || 'CA';
+
+        const multiplier = STATE_MULTIPLIERS[stateKey] || 1.0;
+        const rates = MATERIAL_RATES[materialKey] || MATERIAL_RATES['PEX'];
+
+        // Calculs de base
+        const baseMaterialCost = (sqft * rates.materialCostPerSqFt) + (bathrooms * rates.fixtureCost);
+        const baseLaborCost = sqft * rates.laborCostPerSqFt;
+        
+        let totalBaseCost = baseMaterialCost + baseLaborCost;
+
+        // Ajustement régional
+        const adjustedTotal = totalBaseCost * multiplier;
+
+        // Plage d'estimation (Basse / Haute)
+        const lowEstimate = adjustedTotal * 0.85;
+        const highEstimate = adjustedTotal * 1.15;
+
+        // Mise à jour de l'interface
+        updateResults({
+            low: lowEstimate,
+            high: highEstimate,
+            material: baseMaterialCost * multiplier,
+            labor: baseLaborCost * multiplier,
+            materialName: rates.name,
+            stateName: stateKey
+        });
+    };
+
+    // Mise à jour du DOM
+    const updateResults = (data) => {
+        let resultsDiv = document.getElementById('rpc-results');
+        
+        if (!resultsDiv) {
+            resultsDiv = document.createElement('div');
+            resultsDiv.id = 'rpc-results';
+            resultsDiv.className = 'rpc-results-panel';
+            // Insérer après le panneau d'input
+            const inputPanel = document.getElementById('rpc-input-panel');
+            if (inputPanel && inputPanel.parentNode) {
+                inputPanel.parentNode.insertBefore(resultsDiv, inputPanel.nextSibling);
+            } else {
+                container.appendChild(resultsDiv);
+            }
+        }
+
+        const avgEstimate = (data.low + data.high) / 2;
+
+        resultsDiv.innerHTML = `
+            <div class="rpc-summary">
+                <h3>Estimated Cost Range</h3>
+                <div class="rpc-price-range">
+                    <span class="rpc-low">${formatCurrency(data.low)}</span>
+                    <span class="rpc-separator"> - </span>
+                    <span class="rpc-high">${formatCurrency(data.high)}</span>
+                </div>
+                <p class="rpc-avg">Average: ${formatCurrency(avgEstimate)}</p>
+            </div>
+            
+            <div class="rpc-breakdown">
+                <h4>Cost Breakdown</h4>
+                <div class="breakdown-row">
+                    <span>Materials (${data.materialName})</span>
+                    <span>${formatCurrency(data.material)}</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Labor</span>
+                    <span>${formatCurrency(data.labor)}</span>
+                </div>
+                <div class="breakdown-row total">
+                    <span>Total (incl. regional variance)</span>
+                    <span>${formatCurrency(data.material + data.labor)}</span>
+                </div>
+            </div>
+            
+            <div class="rpc-disclaimer">
+                <p>* Estimates are based on national averages adjusted for ${data.stateName} regional costs. Actual prices may vary based on home layout, accessibility, and local contractor rates.</p>
+            </div>
+        `;
+    };
+
+    // Attacher les écouteurs d'événements
+    const inputs = [sqftInput, bathroomsInput, getMaterialSelect(), getStateSelect()];
+    
+    inputs.forEach(input => {
+        if (input) {
+            input.addEventListener('input', calculateCost);
+            input.addEventListener('change', calculateCost);
+        }
+    });
+
+    // Calcul initial
+    calculateCost();
+});
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "House Repiping Cost Calculator",
+  "description": "Estimate your home repiping cost instantly. Get accurate local price ranges for PEX, copper, or CPVC pipes by state.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+</body>
+</html>
