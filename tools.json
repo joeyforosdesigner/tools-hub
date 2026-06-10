@@ -1,14 +1,56 @@
 {
   "categories": {
+    "career": 1,
+    "finance": 1,
+    "health": 1,
     "immigration": 0,
-    "finance": 0,
     "legal": 0,
+    "lifestyle": 0,
     "marketing": 0,
-    "health": 0,
-    "career": 0,
-    "travel": 0,
-    "realestate": 0,
+    "realestate": 1,
     "tech": 0,
-    "lifestyle": 0
+    "travel": 0
+  },
+  "tools": {
+    "career": [
+      {
+        "slug": "salarycoach",
+        "name": "Salary Negotiation Coach",
+        "short_name": "SalaryCoach",
+        "description": "Maximize your income with AI. Paste your offer, get market data, scripts, and a counter-offer strategy instantly.",
+        "theme_color": "#059669",
+        "lang": "en"
+      }
+    ],
+    "finance": [
+      {
+        "slug": "eorcalc",
+        "name": "EOR Cost Calculator",
+        "short_name": "EORCalc",
+        "description": "Estimate global employment costs instantly. Calculate EOR fees, taxes, and total employer contributions by country.",
+        "theme_color": "#2c3e50",
+        "lang": "en"
+      }
+    ],
+    "health": [
+      {
+        "slug": "bmi_fatcalc",
+        "name": "BMI & Body Fat Calculator",
+        "short_name": "BMI_FatCalc",
+        "description": "Calculate your BMI and body fat percentage instantly. Get personalized health insights and ideal weight ranges for a better you.",
+        "theme_color": "#009688",
+        "lang": "en"
+      }
+    ],
+    "realestate": [
+      {
+        "slug": "mortgagecalc",
+        "name": "Mortgage Monthly Payment Calculator",
+        "short_name": "MortgageCalc",
+        "description": "Calculate monthly mortgage payments, total interest, and view amortization charts instantly with our free, easy-to-use calculator.",
+        "theme_color": "#1b4332",
+        "lang": "en"
+      }
+    ]
   }
 }
