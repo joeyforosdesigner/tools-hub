@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SalaryCoach - AI Salary Negotiation Coach & Counter-Offer Tool</title>
+    <meta name="description" content="Maximize your income with AI. Paste your job offer, get instant market analysis, negotiation scripts, and counter-offer strategies.">
+    <meta name="keywords" content="salary negotiation, job offer, counter offer, ai career coach, salary increase">
+    <meta property="og:title" content="SalaryCoach - AI Salary Negotiation Coach">
+    <meta property="og:description" content="Stop leaving money on the table. Get AI-powered scripts and counter-offer strategies instantly.">
+    <meta property="og:image" content="icon-512.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://salarycoach.tool/">
+    <link rel="manifest" href="manifest.json">
+    <script src="config.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --radius: 18px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #059669;
+            --primary-glow: rgba(5, 150, 105, 0.4);
+            --primary-hover: #047857;
+        }
+
+        [data-theme="dark"] {
+            --bg: #080c12;
+            --bg2: #0e1420;
+            --bg3: #141c2a;
+            --border: rgba(255,255,255,0.07);
+            --border-hover: rgba(255,255,255,0.15);
+            --text: #eef2f8;
+            --text2: #8a97aa;
+            --text3: #4a5568;
+            --card-bg: #0e1420;
+            --card-hover: #131b29;
+            --nav-bg: rgba(8,12,18,0.85);
+            --shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        [data-theme="light"] {
+            --bg: #f4f7fb;
+            --bg2: #ffffff;
+            --bg3: #edf2f7;
+            --border: rgba(0,0,0,0.07);
+            --border-hover: rgba(0,0,0,0.15);
+            --text: #0f172a;
+            --text2: #4a5568;
+            --text3: #a0aec0;
+            --card-bg: #ffffff;
+            --card-hover: #f8faff;
+            --nav-bg: rgba(244,247,251,0.85);
+            --shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Satoshi', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition), color var(--transition);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Layout */
+        .sc-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .sc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sc-brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sc-brand h1 {
+            font-size: 1.8rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sc-brand span {
+            color: var(--primary);
+        }
+
+        .sc-brand p {
+            color: var(--text2);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .sc-theme-toggle {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .sc-theme-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Main Grid */
+        .sc-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            flex: 1;
+        }
+
+        @media (max-width: 900px) {
+            .sc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Controls */
+        .sc-sidebar {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sc-control-group {
+            margin-bottom: 2rem;
+        }
+
+        .sc-control-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text2);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sc-toggle-wrapper {
+            display: flex;
+            background: var(--bg3);
+            padding: 0.25rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .sc-toggle-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text2);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Satoshi', sans-serif;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+        }
+
+        .sc-toggle-btn.active {
+            background: var(--card-bg);
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .sc-slider-container {
+            margin-top: 1rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            background: var(--bg3);
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .sc-slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text3);
+            margin-top: 0.5rem;
+        }
+
+        /* Main Content */
+        .sc-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sc-input-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: border-color var(--transition);
+        }
+
+        .sc-input-card:focus-within {
+            border-color: var(--primary);
+        }
+
+        .sc-textarea {
+            width: 100%;
+            height: 200px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            outline: none;
+            transition: all var(--transition);
+        }
+
+        .sc-textarea::placeholder {
+            color: var(--text3);
+        }
+
+        .sc-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+
+        .sc-action-area {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .sc-btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition);
+            box-shadow: 0 4px 15px var(--primary-glow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sc-btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--primary-glow);
+        }
+
+        .sc-btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Progress Bar */
+        .sc-progress-container {
+            display: none; /* Hidden by default */
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .sc-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--bg3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .sc-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .sc-status-text {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Results Section */
+        .sc-results {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            gap: 2rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sc-result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sc-stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sc-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .sc-stat-label {
+            font-size: 0.85rem;
+            color: var(--text2);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .sc-stat-value {
+            font-size: 1.5rem;
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .sc-script-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .sc-script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sc-script-content {
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .sc-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--primary);
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .sc-download-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sc-download-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* SEO Content */
+        .sc-seo-section {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sc-seo-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .sc-seo-section p {
+            color: var(--text2);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .sc-faq-section {
+            margin-top: 3rem;
+        }
+
+        .sc-faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .sc-faq-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .sc-faq-item p {
+            color: var(--text2);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .sc-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text3);
+            font-size: 0.9rem;
+        }
+
+        /* Ad Placeholder */
+        .ad-banner { display: none; }
+
+        /* Print Styles for PDF */
+        @media print {
+            .sc-sidebar, .sc-header, .sc-action-area, .sc-theme-toggle, .sc-seo-section, .sc-footer, .ad-banner {
+                display: none !important;
+            }
+            .sc-grid {
+                display: block;
+            }
+            .sc-input-card {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+            .sc-textarea {
+                border: 1px solid #ccc;
+                height: auto;
+            }
+            body {
+                background: white;
+                color: black;
+            }
+            .sc-results {
+                display: block !important;
+            }
+            .sc-script-card, .sc-stat-card {
+                border: 1px solid #ddd;
+                box-shadow: none;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sc-wrapper">
+        <!-- Header -->
+        <header class="sc-header">
+            <div class="sc-brand">
+                <h1>Salary<span>Coach</span></h1>
+                <p>AI-Powered Negotiation Assistant</p>
+            </div>
+            <button class="sc-theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                Light Mode
+            </button>
+        </header>
+
+        <!-- Ad Banner Top -->
+        <div class="ad-banner"></div>
+
+        <!-- Main Grid -->
+        <div class="sc-grid">
+            <!-- Sidebar Controls -->
+            <aside class="sc-sidebar">
+                <div class="sc-control-group">
+                    <label>Negotiation Tone</label>
+                    <div class="sc-toggle-wrapper" id="toneWrapper">
+                        <button class="sc-toggle-btn active" data-tone="polite">Polite</button>
+                        <button class="sc-toggle-btn" data-tone="confident">Confident</button>
+                        <button class="sc-toggle-btn" data-tone="assertive">Assertive</button>
+                    </div>
+                </div>
+
+                <div class="sc-control-group">
+                    <label>Confidence Level</label>
+                    <div class="sc-slider-container">
+                        <input type="range" id="confidenceRange" min="1" max="10" value="5">
+                        <div class="sc-slider-labels">
+                            <span>Nervous</span>
+                            <span>Bold</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sc-control-group">
+                    <label>Tool Status</label>
+                    <div style="font-size: 0.85rem; color: var(--text2);">
+                        <p style="margin-bottom: 0.5rem;">✓ Gemini API Connected</p>
+                        <p>✓ Market Data Ready</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="sc-main">
+                <!-- Input Section -->
+                <section class="sc-input-card">
+                    <label for="offerInput" style="display:block; margin-bottom:1rem; font-weight:600; color:var(--text);">Paste Your Job Offer Letter</label>
+                    <textarea id="offerInput" class="sc-textarea" placeholder="Paste the full text of your job offer here. Include salary, benefits, role title, and any bonus structures..."></textarea>
+                    
+                    <div class="sc-action-area">
+                        <button id="analyzeBtn" class="sc-btn-primary">
+                            <span>Analyze Offer</span>
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        </button>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="sc-progress-container" id="progressContainer">
+                        <div class="sc-progress-bar">
+                            <div class="sc-progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="sc-status-text" id="statusText">Analyzing Market Data...</div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section class="sc-results" id="resultsSection">
+                    <!-- Stats Grid -->
+                    <div class="sc-result-grid">
+                        <div class="sc-stat-card">
+                            <div class="sc-stat-label">Current Offer</div>
+                            <div class="sc-stat-value" id="resSalary">--</div>
+                        </div>
+                        <div class="sc-stat-card">
+                            <div class="sc-stat-label">Suggested Counter</div>
+                            <div class="sc-stat-value" id="resCounter" style="color: var(--primary);">--</div>
+                        </div>
+                        <div class="sc-stat-card">
+                            <div class="sc-stat-label">Market Gap</div>
+                            <div class="sc-stat-value" id="resGap">--</div>
+                        </div>
+                    </div>
+
+                    <!-- Script Card -->
+                    <div class="sc-script-card">
+                        <div class="sc-script-header">
+                            <h3>Your Negotiation Script</h3>
+                            <button class="sc-download-btn" onclick="window.print()">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                Save PDF
+                            </button>
+                        </div>
+                        <div class="sc-script-content">
+                            <span id="typewriterText"></span><span class="sc-cursor"></span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- SEO Content -->
+        <section class="sc-seo-section">
+            <h2>How to Use SalaryCoach</h2>
+            <p>
+                Negotiating a salary can be one of the most stressful aspects of the hiring process, but it doesn't have to be. SalaryCoach is designed to bridge the gap between receiving a job offer and accepting a package that truly reflects your worth. To get started, simply copy the text of your job offer letter—including the base salary, signing bonus, equity options, and benefits—and paste it into the input field above. 
+            </p>
+            <p>
+                Once your offer is pasted, use the sidebar controls to customize the AI's approach. If you are naturally reserved or want to maintain a very friendly relationship with your future employer, select the "Polite" tone. If you want to project strength and firmness, choose "Assertive." You can also adjust the confidence slider to reflect how comfortable you feel with negotiation tactics; this helps the AI tailor the complexity of the arguments. 
+            </p>
+            <p>
+                Click the "Analyze Offer" button to initiate the process. The tool will cross-reference your offer against current market data for similar roles, identifying any discrepancies between what you were offered and what the market dictates. Within seconds, you will receive a detailed breakdown including a specific counter-offer number, a gap analysis, and a word-for-word script designed to help you articulate your value effectively. Finally, use the "Save PDF" button to download your strategy, allowing you to rehearse the script before your call or email.
+            </p>
+
+            <div class="sc-faq-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="sc-faq-item">
+                    <h3>How do I negotiate salary without being rude?</h3>
+                    <p>Negotiation is a standard business practice, not a personal conflict. Express gratitude for the offer first, then frame your request around market value and your unique skills. SalaryCoach generates scripts that maintain a professional and respectful tone while still advocating for your interests.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>What is a reasonable counter-offer percentage?</h3>
+                    <p>While it varies by industry, a counter-offer of 10% to 20% above the initial base salary is generally considered reasonable. Our AI analyzes specific market data for your role to suggest a precise number rather than a generic percentage.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>Should I negotiate benefits if the salary is fixed?</h3>
+                    <p>Absolutely. If the base salary is non-negotiable, you can often negotiate other components such as signing bonuses, vacation time, remote work flexibility, or equity grants. The tool identifies leverage points in benefits as well.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>Can I use this tool for a promotion negotiation?</h3>
+                    <p>Yes. While designed for job offers, you can paste your current role description and market data for your target title to generate a script for asking for a raise or promotion during a performance review.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>How accurate is the market data used by the AI?</h3>
+                    <p>The AI utilizes up-to-date compensation trends and benchmarks available in its training data, combined with real-time analysis of the specific details in your offer to provide a highly relevant estimate.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>What if the employer rescinds the offer because I negotiated?</h3>
+                    <p>This is extremely rare and usually a red flag about the company culture. Professional employers expect candidates to negotiate. Using a polite and data-backed approach, like the ones generated here, minimizes any risk of offense.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>Is my job offer data stored or shared?</h3>
+                    <p>No. Your job offer text is processed solely for the purpose of generating your negotiation strategy. We do not store your personal employment data on our servers.</p>
+                </div>
+
+                <div class="sc-faq-item">
+                    <h3>How do I deliver the negotiation script?</h3>
+                    <p>You can deliver the script via email or during a phone call. If over the phone, practice reading it aloud until it sounds natural rather than robotic. The tool allows you to adjust the tone to match your speaking style.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="sc-footer">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> SalaryCoach — All rights reserved.</p>
+        </footer>
+
+        <!-- Ad Banner Bottom -->
+        <div class="ad-banner"></div>
+    </div>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SalaryCoach",
+      "description": "Maximize your income with AI. Paste your offer, get market data, scripts, and a counter-offer strategy instantly.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Load saved theme
+        if (localStorage.getItem('theme')) {
+            html.setAttribute('data-theme', localStorage.getItem('theme'));
+            themeToggle.textContent = localStorage.getItem('theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        // --- UI Interactions ---
+        const toneBtns = document.querySelectorAll('.sc-toggle-btn');
+        let selectedTone = 'polite';
+
+        toneBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toneBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedTone = btn.dataset.tone;
+            });
+        });
+
+        const confidenceRange = document.getElementById('confidenceRange');
+        let confidenceLevel = 5;
+
+        confidenceRange.addEventListener('input', () => {
+            confidenceLevel = confidenceRange.value;
+        });
+
+        // --- Main Analysis Logic ---
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const offerInput = document.getElementById('offerInput');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const statusText = document.getElementById('statusText');
+        const resultsSection = document.getElementById('resultsSection');
+
+        analyzeBtn.addEventListener('click', async () => {
+            const offerText = offerInput.value.trim();
+            if (!offerText) {
+                alert('Please paste your job offer first.');
+                return;
+            }
+
+            // Show progress
+            analyzeBtn.disabled = true;
+            progressContainer.style.display = 'block';
+            resultsSection.style.display = 'none';
+
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress = Math.min(progress + 8, 85);
+                progressFill.style.width = progress + '%';
+            }, 300);
+
+            const statuses = [
+                'Analyzing Market Data...',
+                'Calculating Counter-Offer...',
+                'Generating Negotiation Script...'
+            ];
+            let statusIdx = 0;
+            const statusInterval = setInterval(() => {
+                statusText.textContent = statuses[statusIdx % statuses.length];
+                statusIdx++;
+            }, 2000);
+
+            try {
+                const prompt = `You are an expert salary negotiation coach.
+Analyze this job offer and respond ONLY with valid JSON, no markdown:
+{
+  "extracted_salary": "salary found in the offer as a string",
+  "role": "job title found in the offer",
+  "counter_offer": "suggested counter-offer (10-20% higher)",
+  "gap": "difference between counter and offer",
+  "script": "A full word-for-word negotiation script the candidate can use, tailored to a ${selectedTone} tone and confidence level ${confidenceLevel}/10. At least 200 words."
+}
+
+Job Offer Text:
+${offerText}`;
+
+                const aiResponse = await CONFIG.gemini(prompt);
+                const rawText = aiResponse.text || '';
+                const cleaned = rawText.replace(/```json|```/g, '').trim();
+                const data = JSON.parse(cleaned);
+
+                // Fill stats
+                document.getElementById('resSalary').textContent = data.extracted_salary || '--';
+                document.getElementById('resCounter').textContent = data.counter_offer || '--';
+                document.getElementById('resGap').textContent = data.gap || '--';
+
+                // Typewriter effect for script
+                const typewriterText = document.getElementById('typewriterText');
+                typewriterText.textContent = '';
+                const script = data.script || 'No script generated.';
+                let charIdx = 0;
+                const typeInterval = setInterval(() => {
+                    if (charIdx < script.length) {
+                        typewriterText.textContent += script[charIdx];
+                        charIdx++;
+                    } else {
+                        clearInterval(typeInterval);
+                    }
+                }, 18);
+
+                // Show results
+                clearInterval(progressInterval);
+                clearInterval(statusInterval);
+                progressFill.style.width = '100%';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                    resultsSection.style.display = 'flex';
+                    analyzeBtn.disabled = false;
+                }, 400);
+
+            } catch (err) {
+                clearInterval(progressInterval);
+                clearInterval(statusInterval);
+                progressContainer.style.display = 'none';
+                analyzeBtn.disabled = false;
+                alert('Error analyzing offer: ' + err.message);
+            }
+        });
+    </script>
+</body>
+</html>
+        
+
+        

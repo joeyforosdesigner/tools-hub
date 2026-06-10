@@ -1,0 +1,22 @@
+{
+  "name": "BMI & Body Fat Calculator",
+  "short_name": "BMI_FatCalc",
+  "description": "Calculate your BMI and body fat percentage instantly. Get personalized health insights and ideal weight ranges for a better you.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#009688",
+  "theme_color": "#009688",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
