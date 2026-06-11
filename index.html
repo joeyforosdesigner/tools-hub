@@ -3,650 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToolsHub — 100+ Free AI-Powered Web Tools</title>
+<title>ToolsHub — Free AI-Powered Web Tools</title>
 <meta name="description" content="Free online tools for immigration, finance, legal, marketing, health and more. AI-powered, instant results, no signup required.">
-<meta property="og:title" content="ToolsHub — 100+ Free AI-Powered Web Tools">
+<meta property="og:title" content="ToolsHub — Free AI-Powered Web Tools">
 <meta property="og:description" content="Free online tools for everyone. Immigration trackers, finance calculators, legal guides and more.">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-<style>
-/* ── TOKENS ── */
-:root {
-  --radius: 18px;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-[data-theme="dark"] {
-  --bg: #080c12;
-  --bg2: #0e1420;
-  --bg3: #141c2a;
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.15);
-  --text: #eef2f8;
-  --text2: #8a97aa;
-  --text3: #4a5568;
-  --card-bg: #0e1420;
-  --card-hover: #131b29;
-  --nav-bg: rgba(8,12,18,0.85);
-  --shadow: 0 20px 60px rgba(0,0,0,0.4);
-  --glow: rgba(99,179,237,0.15);
-}
-
-[data-theme="light"] {
-  --bg: #f4f7fb;
-  --bg2: #ffffff;
-  --bg3: #edf2f7;
-  --border: rgba(0,0,0,0.07);
-  --border-hover: rgba(0,0,0,0.15);
-  --text: #0f172a;
-  --text2: #4a5568;
-  --text3: #a0aec0;
-  --card-bg: #ffffff;
-  --card-hover: #f8faff;
-  --nav-bg: rgba(244,247,251,0.85);
-  --shadow: 0 20px 60px rgba(0,0,0,0.08);
-  --glow: rgba(99,130,237,0.08);
-}
-
-/* ── RESET ── */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Satoshi', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background var(--transition), color var(--transition);
-}
-
-/* ── NOISE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 40px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: background var(--transition);
-}
-
-.nav-logo {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  color: var(--text);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-logo-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #63b3ed, #7b2fff);
-  flex-shrink: 0;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.7; }
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text2);
-  text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 8px;
-  transition: color var(--transition), background var(--transition);
-}
-
-.nav-links a:hover {
-  color: var(--text);
-  background: var(--bg3);
-}
-
-.theme-toggle {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  transition: all var(--transition);
-  flex-shrink: 0;
-}
-
-.theme-toggle:hover {
-  border-color: var(--border-hover);
-  transform: rotate(15deg);
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-}
-
-.hamburger span {
-  width: 20px;
-  height: 2px;
-  background: var(--text);
-  border-radius: 2px;
-  transition: all var(--transition);
-}
-
-/* ── MOBILE MENU ── */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 64px;
-  left: 0; right: 0;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  padding: 20px;
-  z-index: 99;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mobile-menu.open { display: flex; }
-
-.mobile-menu a {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text2);
-  text-decoration: none;
-  padding: 12px 16px;
-  border-radius: 10px;
-  transition: all var(--transition);
-}
-
-.mobile-menu a:hover {
-  color: var(--text);
-  background: var(--bg3);
-}
-
-/* ── HERO ── */
-.hero {
-  position: relative;
-  z-index: 1;
-  padding: 140px 40px 80px;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--text2);
-  margin-bottom: 24px;
-  padding: 8px 18px;
-  border: 1px solid var(--border);
-  border-radius: 50px;
-  background: var(--bg2);
-}
-
-.hero-eyebrow::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #63b3ed;
-}
-
-.hero h1 {
-  font-family: 'Clash Display', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 700;
-  line-height: 1.0;
-  letter-spacing: -2px;
-  margin-bottom: 24px;
-  color: var(--text);
-}
-
-.hero h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, #63b3ed 0%, #7b2fff 50%, #e879f9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub {
-  font-size: 1.1rem;
-  color: var(--text2);
-  max-width: 520px;
-  margin: 0 auto 40px;
-  line-height: 1.7;
-}
-
-.hero-stats {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-.stat {
-  text-align: center;
-}
-
-.stat-num {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -1px;
-}
-
-.stat-lbl {
-  font-size: 0.78rem;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 2px;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--border);
-}
-
-/* ── MESH BACKGROUND ── */
-.hero-mesh {
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 500px;
-  background: radial-gradient(ellipse at 30% 40%, rgba(99,130,237,0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 70% 60%, rgba(123,47,255,0.06) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* ── SECTION ── */
-.section {
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px 100px;
-}
-
-.section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.section-title {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  color: var(--text);
-}
-
-.section-sub {
-  font-size: 0.875rem;
-  color: var(--text2);
-  margin-top: 4px;
-}
-
-/* ── CATEGORY GRID ── */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
-}
-
-/* ── CATEGORY CARD ── */
-.cat-card {
-  position: relative;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  transition: all var(--transition);
-  overflow: hidden;
-  cursor: pointer;
-  group: true;
-}
-
-.cat-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity var(--transition);
-  border-radius: var(--radius);
-}
-
-.cat-card:hover {
-  background: var(--card-hover);
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-}
-
-.cat-card:hover::before { opacity: 1; }
-
-/* Card accent glow on hover */
-.cat-card:hover .cat-icon-wrap {
-  transform: scale(1.05);
-}
-
-.cat-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.cat-icon-wrap {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--transition);
-  flex-shrink: 0;
-}
-
-.cat-arrow {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text3);
-  transition: all var(--transition);
-  font-size: 1rem;
-}
-
-.cat-card:hover .cat-arrow {
-  border-color: var(--border-hover);
-  color: var(--text);
-  transform: translate(2px, -2px);
-}
-
-.cat-name {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.3px;
-}
-
-.cat-desc {
-  font-size: 0.875rem;
-  color: var(--text2);
-  line-height: 1.6;
-  flex: 1;
-}
-
-.cat-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.cat-count {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.cat-rpm {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  letter-spacing: 0.5px;
-}
-
-/* ── FEATURED TOOL ── */
-.featured-section {
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px 80px;
-}
-
-.featured-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 40px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 40px;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.featured-card::before {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(99,130,237,0.08), transparent 70%);
-  pointer-events: none;
-}
-
-.featured-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #63b3ed;
-  margin-bottom: 12px;
-}
-
-.featured-badge::before {
-  content: '★';
-  font-size: 0.8rem;
-}
-
-.featured-title {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -1px;
-  margin-bottom: 12px;
-  color: var(--text);
-}
-
-.featured-desc {
-  font-size: 0.95rem;
-  color: var(--text2);
-  line-height: 1.7;
-  max-width: 500px;
-  margin-bottom: 24px;
-}
-
-.featured-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #63b3ed, #7b2fff);
-  border-radius: 10px;
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all var(--transition);
-  border: none;
-  cursor: pointer;
-}
-
-.featured-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(99,130,237,0.35);
-}
-
-.featured-visual {
-  width: 180px;
-  height: 180px;
-  flex-shrink: 0;
-}
-
-/* ── FOOTER ── */
-footer {
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer-copy {
-  font-size: 0.85rem;
-  color: var(--text3);
-}
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a {
-  font-size: 0.85rem;
-  color: var(--text3);
-  text-decoration: none;
-  transition: color var(--transition);
-}
-
-.footer-links a:hover { color: var(--text2); }
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero { animation: fadeUp 0.7s ease forwards; }
-
-.cat-card {
-  opacity: 0;
-  animation: fadeUp 0.5s ease forwards;
-}
-
-.cat-card:nth-child(1) { animation-delay: 0.05s; }
-.cat-card:nth-child(2) { animation-delay: 0.10s; }
-.cat-card:nth-child(3) { animation-delay: 0.15s; }
-.cat-card:nth-child(4) { animation-delay: 0.20s; }
-.cat-card:nth-child(5) { animation-delay: 0.25s; }
-.cat-card:nth-child(6) { animation-delay: 0.30s; }
-.cat-card:nth-child(7) { animation-delay: 0.35s; }
-.cat-card:nth-child(8) { animation-delay: 0.40s; }
-.cat-card:nth-child(9) { animation-delay: 0.45s; }
-.cat-card:nth-child(10) { animation-delay: 0.50s; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .hero { padding: 110px 20px 60px; }
-  .hero h1 { letter-spacing: -1px; }
-  .section, .featured-section { padding-left: 20px; padding-right: 20px; }
-  .categories-grid { grid-template-columns: 1fr; }
-  .featured-card { grid-template-columns: 1fr; }
-  .featured-visual { display: none; }
-  .hero-stats { gap: 20px; }
-  .stat-divider { display: none; }
-  footer { padding: 30px 20px; }
-}
-
-@media (max-width: 480px) {
-  .hero h1 { font-size: 2.4rem; }
-  .cat-card { padding: 22px; }
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a href="/" class="nav-logo">
     <span class="nav-logo-dot"></span>
@@ -665,14 +29,12 @@ footer {
   </div>
 </nav>
 
-<!-- ── MOBILE MENU ── -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#categories" onclick="toggleMenu()">Tools</a>
   <a href="#featured" onclick="toggleMenu()">Featured</a>
   <a href="#about" onclick="toggleMenu()">About</a>
 </div>
 
-<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-mesh"></div>
   <div class="hero-eyebrow">Free AI-Powered Tools</div>
@@ -680,7 +42,7 @@ footer {
   <p class="hero-sub">100+ instant web tools for immigration, finance, legal, health and more. No signup. No limits. Just results.</p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num">100+</div>
+      <div class="stat-num" id="globalToolCount">100+</div>
       <div class="stat-lbl">Free Tools</div>
     </div>
     <div class="stat-divider"></div>
@@ -701,7 +63,6 @@ footer {
   </div>
 </section>
 
-<!-- ── FEATURED ── -->
 <section class="featured-section" id="featured">
   <div class="featured-card">
     <div>
@@ -733,21 +94,19 @@ footer {
   </div>
 </section>
 
-<!-- ── CATEGORIES ── -->
 <section class="section" id="categories">
   <div class="section-header">
     <div>
       <h2 class="section-title">Browse by Category</h2>
-      <p class="section-sub">10 categories · 100+ tools · always free</p>
+      <p class="section-sub">10 categories · <span id="subSectionToolCount">100+</span> tools · always free</p>
     </div>
   </div>
 
   <div class="categories-grid" id="categoriesGrid"></div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer id="about">
-  <div class="footer-copy">© 2026 ToolsHub — Free AI-Powered Tools for Everyone</div>
+  <div class="footer-copy">© <span id="year"></span> ToolsHub — Free AI-Powered Tools for Everyone</div>
   <div class="footer-links">
     <a href="#">Privacy</a>
     <a href="#">Terms</a>
@@ -757,197 +116,133 @@ footer {
 
 <script>
 // ── CATEGORIES DATA ── 
+// ── CATEGORIES DATA (Initialisées à 0 par défaut pour éviter les faux nombres) ── 
 const CATEGORIES = [
   {
     slug: 'immigration',
     name: 'Immigration & Visa',
     desc: 'Processing time trackers, visa calculators, document checklists and status tools for every country.',
-    tools: 12,
-    rpm: '$8–15',
-    rpmClass: 'rpm-blue',
+    tools: 0,
     color: '#c8102e',
     colorLight: 'rgba(200,16,46,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(200,16,46,0.12)"/>
-      <path d="M28 12C19.16 12 12 19.16 12 28C12 36.84 19.16 44 28 44C36.84 44 44 36.84 44 28C44 19.16 36.84 12 28 12Z" stroke="#c8102e" stroke-width="1.5" fill="none"/>
-      <path d="M12 28H44M28 12C24 17 21 22 21 28C21 34 24 39 28 44C32 39 35 34 35 28C35 22 32 17 28 12Z" stroke="#c8102e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <circle cx="28" cy="28" r="3" fill="#c8102e"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(200,16,46,0.12)"/><path d="M28 12C19.16 12 12 19.16 12 28C12 36.84 19.16 44 28 44C36.84 44 44 36.84 44 28C44 19.16 36.84 12 28 12Z" stroke="#c8102e" stroke-width="1.5" fill="none"/><path d="M12 28H44M28 12C24 17 21 22 21 28C21 34 24 39 28 44C32 39 35 34 35 28C35 22 32 17 28 12Z" stroke="#c8102e" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="28" cy="28" r="3" fill="#c8102e"/></svg>`
   },
   {
     slug: 'finance',
     name: 'Finance & Money',
     desc: 'Salary calculators, loan simulators, tax estimators, and investment tools for every country.',
-    tools: 18,
-    rpm: '$12–25',
-    rpmClass: 'rpm-green',
+    tools: 0,
     color: '#00c896',
     colorLight: 'rgba(0,200,150,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(0,200,150,0.12)"/>
-      <path d="M16 38L22 28L28 32L34 22L40 18" stroke="#00c896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="22" cy="28" r="2.5" fill="#00c896"/>
-      <circle cx="28" cy="32" r="2.5" fill="#00c896"/>
-      <circle cx="34" cy="22" r="2.5" fill="#00c896"/>
-      <path d="M28 14V18M28 38V42M20 28H16M40 28H36" stroke="rgba(0,200,150,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(0,200,150,0.12)"/><path d="M16 38L22 28L28 32L34 22L40 18" stroke="#00c896" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="28" r="2.5" fill="#00c896"/><circle cx="28" cy="32" r="2.5" fill="#00c896"/><circle cx="34" cy="22" r="2.5" fill="#00c896"/><path d="M28 14V18M28 38V42M20 28H16M40 28H36" stroke="rgba(0,200,150,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>`
   },
   {
     slug: 'legal',
     name: 'Legal & Administrative',
     desc: 'Contract generators, rights checkers, administrative form helpers and legal document tools.',
-    tools: 10,
-    rpm: '$10–20',
-    rpmClass: 'rpm-purple',
+    tools: 0,
     color: '#7b2fff',
     colorLight: 'rgba(123,47,255,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(123,47,255,0.12)"/>
-      <rect x="18" y="14" width="20" height="28" rx="3" stroke="#7b2fff" stroke-width="1.5" fill="none"/>
-      <path d="M22 20H34M22 25H34M22 30H30" stroke="#7b2fff" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M30 36L33 39L38 33" stroke="#7b2fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(123,47,255,0.12)"/><rect x="18" y="14" width="20" height="28" rx="3" stroke="#7b2fff" stroke-width="1.5" fill="none"/><path d="M22 20H34M22 25H34M22 30H30" stroke="#7b2fff" stroke-width="1.5" stroke-linecap="round"/><path d="M30 36L33 39L38 33" stroke="#7b2fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
   {
     slug: 'marketing',
     name: 'Marketing & Business',
     desc: 'Ad generators, copywriting tools, ROI calculators and social media content creators.',
-    tools: 15,
-    rpm: '$8–15',
-    rpmClass: 'rpm-orange',
+    tools: 0,
     color: '#ff6b35',
     colorLight: 'rgba(255,107,53,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(255,107,53,0.12)"/>
-      <path d="M14 36L20 24L26 30L32 20L38 14" stroke="#ff6b35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="14" y="38" width="6" height="6" rx="2" fill="#ff6b35" opacity="0.6"/>
-      <rect x="22" y="34" width="6" height="10" rx="2" fill="#ff6b35" opacity="0.7"/>
-      <rect x="30" y="30" width="6" height="14" rx="2" fill="#ff6b35" opacity="0.85"/>
-      <rect x="38" y="24" width="6" height="20" rx="2" fill="#ff6b35"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(255,107,53,0.12)"/><path d="M14 36L20 24L26 30L32 20L38 14" stroke="#ff6b35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="38" width="6" height="6" rx="2" fill="#ff6b35" opacity="0.6"/><rect x="22" y="34" width="6" height="10" rx="2" fill="#ff6b35" opacity="0.7"/><rect x="30" y="30" width="6" height="14" rx="2" fill="#ff6b35" opacity="0.85"/><rect x="38" y="24" width="6" height="20" rx="2" fill="#ff6b35"/></svg>`
   },
   {
     slug: 'health',
     name: 'Health & Wellness',
     desc: 'BMI calculators, calorie trackers, sleep analyzers, and wellness assessment tools.',
-    tools: 14,
-    rpm: '$6–12',
-    rpmClass: 'rpm-pink',
+    tools: 0,
     color: '#e879f9',
     colorLight: 'rgba(232,121,249,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(232,121,249,0.12)"/>
-      <path d="M28 40C28 40 14 32 14 22C14 17.58 17.58 14 22 14C24.42 14 26.6 15.06 28 16.76C29.4 15.06 31.58 14 34 14C38.42 14 42 17.58 42 22C42 32 28 40 28 40Z" stroke="#e879f9" stroke-width="1.5" fill="rgba(232,121,249,0.08)"/>
-      <path d="M20 24H24L26 20L28 28L30 22L32 24H36" stroke="#e879f9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(232,121,249,0.12)"/><path d="M28 40C28 40 14 32 14 22C14 17.58 17.58 14 22 14C24.42 14 26.6 15.06 28 16.76C29.4 15.06 31.58 14 34 14C38.42 14 42 17.58 42 22C42 32 28 40 28 40Z" stroke="#e879f9" stroke-width="1.5" fill="rgba(232,121,249,0.08)"/><path d="M20 24H24L26 20L28 28L30 22L32 24H36" stroke="#e879f9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
   {
     slug: 'career',
     name: 'Career & Education',
     desc: 'Resume analyzers, salary negotiation tools, study planners and career path calculators.',
-    tools: 11,
-    rpm: '$6–10',
-    rpmClass: 'rpm-blue',
+    tools: 0,
     color: '#63b3ed',
     colorLight: 'rgba(99,179,237,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(99,179,237,0.12)"/>
-      <path d="M28 14L42 20V26C42 33.18 35.84 39.74 28 42C20.16 39.74 14 33.18 14 26V20L28 14Z" stroke="#63b3ed" stroke-width="1.5" fill="rgba(99,179,237,0.06)"/>
-      <path d="M22 28L26 32L34 24" stroke="#63b3ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(99,179,237,0.12)"/><path d="M28 14L42 20V26C42 33.18 35.84 39.74 28 42C20.16 39.74 14 33.18 14 26V20L28 14Z" stroke="#63b3ed" stroke-width="1.5" fill="rgba(99,179,237,0.06)"/><path d="M22 28L26 32L34 24" stroke="#63b3ed" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
   {
     slug: 'travel',
     name: 'Travel & Expat',
     desc: 'Currency converters, cost of living comparators, visa requirement checkers and travel planners.',
-    tools: 9,
-    rpm: '$5–10',
-    rpmClass: 'rpm-teal',
+    tools: 0,
     color: '#38b2ac',
     colorLight: 'rgba(56,178,172,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(56,178,172,0.12)"/>
-      <circle cx="28" cy="26" r="10" stroke="#38b2ac" stroke-width="1.5" fill="none"/>
-      <path d="M28 16V14M28 38V36M18 26H16M40 26H38" stroke="rgba(56,178,172,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M22 20L24.5 22.5M33.5 29.5L36 32M22 32L24.5 29.5M33.5 22.5L36 20" stroke="rgba(56,178,172,0.4)" stroke-width="1" stroke-linecap="round"/>
-      <circle cx="28" cy="26" r="4" fill="rgba(56,178,172,0.3)"/>
-      <path d="M22 42C24 38 32 38 34 42" stroke="#38b2ac" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(56,178,172,0.12)"/><circle cx="28" cy="26" r="10" stroke="#38b2ac" stroke-width="1.5" fill="none"/><path d="M28 16V14M28 38V36M18 26H16M40 26H38" stroke="rgba(56,178,172,0.5)" stroke-width="1.5" stroke-linecap="round"/><path d="M22 20L24.5 22.5M33.5 29.5L36 32M22 32L24.5 29.5M33.5 22.5L36 20" stroke="rgba(56,178,172,0.4)" stroke-width="1" stroke-linecap="round"/><circle cx="28" cy="26" r="4" fill="rgba(56,178,172,0.3)"/><path d="M22 42C24 38 32 38 34 42" stroke="#38b2ac" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>`
   },
   {
     slug: 'realestate',
     name: 'Real Estate',
     desc: 'Mortgage calculators, property value estimators, rental yield calculators and buying guides.',
-    tools: 8,
-    rpm: '$10–18',
-    rpmClass: 'rpm-green',
+    tools: 0,
     color: '#48bb78',
     colorLight: 'rgba(72,187,120,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(72,187,120,0.12)"/>
-      <path d="M14 28L28 16L42 28" stroke="#48bb78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="18" y="28" width="20" height="16" rx="2" stroke="#48bb78" stroke-width="1.5" fill="rgba(72,187,120,0.08)"/>
-      <rect x="24" y="34" width="8" height="10" rx="1" fill="rgba(72,187,120,0.3)"/>
-      <path d="M24 28V26C24 24.9 24.9 24 26 24H30C31.1 24 32 24.9 32 26V28" stroke="rgba(72,187,120,0.5)" stroke-width="1.5"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(72,187,120,0.12)"/><path d="M14 28L28 16L42 28" stroke="#48bb78" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="18" y="28" width="20" height="16" rx="2" stroke="#48bb78" stroke-width="1.5" fill="rgba(72,187,120,0.08)"/><rect x="24" y="34" width="8" height="10" rx="1" fill="rgba(72,187,120,0.3)"/><path d="M24 28V26C24 24.9 24.9 24 26 24H30C31.1 24 32 24.9 32 26V28" stroke="rgba(72,187,120,0.5)" stroke-width="1.5"/></svg>`
   },
   {
     slug: 'tech',
     name: 'Tech & Developers',
     desc: 'Code converters, regex testers, API response formatters and developer productivity tools.',
-    tools: 13,
-    rpm: '$6–12',
-    rpmClass: 'rpm-purple',
+    tools: 0,
     color: '#9f7aea',
     colorLight: 'rgba(159,122,234,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(159,122,234,0.12)"/>
-      <rect x="12" y="18" width="32" height="22" rx="4" stroke="#9f7aea" stroke-width="1.5" fill="none"/>
-      <path d="M20 24L16 28L20 32M36 24L40 28L36 32M26 33L30 23" stroke="#9f7aea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M20 42H36" stroke="rgba(159,122,234,0.5)" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="28" cy="42" r="2" fill="rgba(159,122,234,0.5)"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(159,122,234,0.12)"/><rect x="12" y="18" width="32" height="22" rx="4" stroke="#9f7aea" stroke-width="1.5" fill="none"/><path d="M20 24L16 28L20 32M36 24L40 28L36 32M26 33L30 23" stroke="#9f7aea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 42H36" stroke="rgba(159,122,234,0.5)" stroke-width="1.5" stroke-linecap="round"/><circle cx="28" cy="42" r="2" fill="rgba(159,122,234,0.5)"/></svg>`
   },
   {
     slug: 'lifestyle',
     name: 'Family & Lifestyle',
     desc: 'Budget planners, meal calculators, parenting tools and everyday life organizers.',
-    tools: 10,
-    rpm: '$3–6',
-    rpmClass: 'rpm-yellow',
+    tools: 0,
     color: '#f6ad55',
     colorLight: 'rgba(246,173,85,0.12)',
-    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="56" height="56" rx="14" fill="rgba(246,173,85,0.12)"/>
-      <circle cx="22" cy="22" r="7" stroke="#f6ad55" stroke-width="1.5" fill="none"/>
-      <circle cx="34" cy="22" r="7" stroke="#f6ad55" stroke-width="1.5" fill="rgba(246,173,85,0.08)"/>
-      <path d="M14 42C14 36.48 17.58 32 22 32C24.22 32 26.24 33.04 27.7 34.76C29.16 33.04 31.18 32 33.4 32C37.82 32 41.4 36.48 41.4 42" stroke="#f6ad55" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-    </svg>`
+    svg: `<svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="14" fill="rgba(246,173,85,0.12)"/><circle cx="22" cy="22" r="7" stroke="#f6ad55" stroke-width="1.5" fill="none"/><circle cx="34" cy="22" r="7" stroke="#f6ad55" stroke-width="1.5" fill="rgba(246,173,85,0.08)"/><path d="M14 42C14 36.48 17.58 32 22 32C24.22 32 26.24 33.04 27.7 34.76C29.16 33.04 31.18 32 33.4 32C37.82 32 41.4 36.48 41.4 42" stroke="#f6ad55" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>`
   }
 ];
 
-// ── RPM BADGE COLORS ──
-const RPM_COLORS = {
-  'rpm-green': { bg: 'rgba(0,200,150,0.12)', text: '#00c896' },
-  'rpm-blue': { bg: 'rgba(99,179,237,0.12)', text: '#63b3ed' },
-  'rpm-purple': { bg: 'rgba(123,47,255,0.12)', text: '#7b2fff' },
-  'rpm-orange': { bg: 'rgba(255,107,53,0.12)', text: '#ff6b35' },
-  'rpm-pink': { bg: 'rgba(232,121,249,0.12)', text: '#e879f9' },
-  'rpm-teal': { bg: 'rgba(56,178,172,0.12)', text: '#38b2ac' },
-  'rpm-yellow': { bg: 'rgba(246,173,85,0.12)', text: '#f6ad55' },
-};
-
 // ── RENDER CATEGORIES ──
-function renderCategories() {
+async function renderCategories() {
   const grid = document.getElementById('categoriesGrid');
-  grid.innerHTML = '';
+  if (!grid) return;
 
+  let calculatedTotal = 0;
+  let categoriesData = {};
+
+  try {
+    // Tentative de récupération depuis tools.json
+    const res = await fetch('/tools.json');
+    if (res.ok) {
+      const data = await res.json();
+      categoriesData = data.categories || {};
+    }
+  } catch (error) {
+    console.warn("Fichier tools.json introuvable ou vide. Affichage par défaut à 0.");
+  }
+
+  // Rendu de l'interface graphique
+  grid.innerHTML = '';
   CATEGORIES.forEach(cat => {
-    const rpm = RPM_COLORS[cat.rpmClass] || RPM_COLORS['rpm-blue'];
+    // Si la catégorie existe dans le JSON, on prend sa valeur, sinon c'est 0.
+    const count = categoriesData[cat.slug] !== undefined ? categoriesData[cat.slug] : 0;
+    calculatedTotal += count;
+
+    const toolsText = `${count} tool${count !== 1 ? 's' : ''}`;
+
     const card = document.createElement('a');
     card.className = 'cat-card';
     card.href = `/tools/${cat.slug}/`;
     card.style.setProperty('--card-accent', cat.color);
+    
     card.innerHTML = `
       <div class="cat-card-top">
         <div class="cat-icon-wrap">${cat.svg}</div>
@@ -958,12 +253,18 @@ function renderCategories() {
         <div class="cat-desc">${cat.desc}</div>
       </div>
       <div class="cat-footer">
-        <div class="cat-count">${cat.tools} tools</div>
-        <div class="cat-rpm" style="background:${rpm.bg};color:${rpm.text}">RPM ${cat.rpm}</div>
+        <div class="cat-count">${toolsText}</div>
       </div>
     `;
     grid.appendChild(card);
   });
+
+  // Mise à jour dynamique des compteurs globaux de la page
+  const globalCountEl = document.getElementById('globalToolCount');
+  if (globalCountEl) globalCountEl.textContent = `${calculatedTotal}`;
+
+  const subSectionCountEl = document.getElementById('subSectionToolCount');
+  if (subSectionCountEl) subSectionCountEl.textContent = calculatedTotal;
 }
 
 // ── THEME ──
@@ -989,6 +290,9 @@ function toggleMenu() {
 // ── INIT ──
 initTheme();
 renderCategories();
+
+// Gestion de l'année du Copyright automatique et dynamique (2026+)
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>

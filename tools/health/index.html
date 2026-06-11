@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToolsHub — Category</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/nav.js"></script>
+<style>
+:root { --radius: 18px; --transition: 0.3s cubic-bezier(0.4,0,0.2,1); }
+[data-theme="dark"] {
+  --bg:#080c12; --bg2:#0e1420; --bg3:#141c2a;
+  --border:rgba(255,255,255,0.07); --border-hover:rgba(255,255,255,0.15);
+  --text:#eef2f8; --text2:#8a97aa; --text3:#4a5568;
+  --card-bg:#0e1420; --card-hover:#131b29;
+  --nav-bg:rgba(8,12,18,0.85); --shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+[data-theme="light"] {
+  --bg:#f4f7fb; --bg2:#ffffff; --bg3:#edf2f7;
+  --border:rgba(0,0,0,0.07); --border-hover:rgba(0,0,0,0.15);
+  --text:#0f172a; --text2:#4a5568; --text3:#a0aec0;
+  --card-bg:#ffffff; --card-hover:#f8faff;
+  --nav-bg:rgba(244,247,251,0.85); --shadow:0 20px 60px rgba(0,0,0,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Satoshi',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background var(--transition),color var(--transition);}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;transition:background var(--transition);}
+.nav-logo{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:-0.5px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#63b3ed,#7b2fff);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.3);opacity:0.7;}}
+.nav-right{display:flex;align-items:center;gap:24px;}
+.theme-toggle{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all var(--transition);}
+.theme-toggle:hover{border-color:var(--border-hover);transform:rotate(15deg);}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:0.875rem;font-weight:500;color:var(--text2);text-decoration:none;padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);transition:all var(--transition);}
+.back-btn:hover{color:var(--text);border-color:var(--border-hover);}
+
+/* PAGE HEADER */
+.page-header{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:100px 40px 48px;}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text3);margin-bottom:20px;}
+.breadcrumb a{color:var(--text3);text-decoration:none;transition:color var(--transition);}
+.breadcrumb a:hover{color:var(--text2);}
+.breadcrumb span{color:var(--text3);}
+.page-header-inner{display:flex;align-items:center;gap:20px;}
+.cat-icon-lg{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.page-title{font-family:'Clash Display',sans-serif;font-size:2.2rem;font-weight:700;letter-spacing:-1px;color:var(--text);}
+.page-sub{font-size:0.95rem;color:var(--text2);margin-top:6px;line-height:1.6;}
+.tools-count-badge{display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);padding:5px 14px;border:1px solid var(--border);border-radius:50px;background:var(--bg2);margin-top:14px;}
+
+/* TOOLS GRID */
+.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 40px 100px;}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+
+/* TOOL CARD */
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;display:flex;flex-direction:column;overflow:hidden;transition:all var(--transition);opacity:0;animation:fadeUp 0.5s ease forwards;}
+.tool-card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-3px);box-shadow:var(--shadow);}
+
+/* PREVIEW ZONE */
+.tool-preview{height:160px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background var(--transition);}
+.tool-card:hover .tool-preview{background:var(--bg2);}
+.preview-icon{font-size:2.5rem;opacity:0.4;transition:all var(--transition);}
+.tool-card:hover .preview-icon{opacity:0.6;transform:scale(1.1);}
+.preview-accent{position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;opacity:0.06;transition:opacity var(--transition);}
+.tool-card:hover .preview-accent{opacity:0.12;}
+
+/* CARD BODY */
+.tool-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.tool-name{font-family:'Clash Display',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.tool-desc{font-size:0.83rem;color:var(--text2);line-height:1.55;flex:1;}
+.tool-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.tool-lang{font-size:0.72rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.tool-arrow{font-size:0.85rem;color:var(--text3);transition:all var(--transition);}
+.tool-card:hover .tool-arrow{color:var(--text);transform:translate(2px,-2px);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 20px;grid-column:1/-1;}
+.empty-icon{font-size:3rem;margin-bottom:16px;opacity:0.3;}
+.empty-title{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:8px;}
+.empty-sub{font-size:0.9rem;color:var(--text2);}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto;}
+.footer-copy{font-size:0.85rem;color:var(--text3);}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:0.85rem;color:var(--text3);text-decoration:none;transition:color var(--transition);}
+.footer-links a:hover{color:var(--text2);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* Stagger animation for tool cards */
+.tool-card:nth-child(1){animation-delay:0.05s;}
+.tool-card:nth-child(2){animation-delay:0.10s;}
+.tool-card:nth-child(3){animation-delay:0.15s;}
+.tool-card:nth-child(4){animation-delay:0.20s;}
+.tool-card:nth-child(5){animation-delay:0.25s;}
+.tool-card:nth-child(6){animation-delay:0.30s;}
+.tool-card:nth-child(7){animation-delay:0.35s;}
+.tool-card:nth-child(8){animation-delay:0.40s;}
+.tool-card:nth-child(9){animation-delay:0.45s;}
+.tool-card:nth-child(10){animation-delay:0.50s;}
+
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .page-header{padding:90px 20px 36px;}
+  .section{padding-left:20px;padding-right:20px;}
+  .tools-grid{grid-template-columns:1fr;}
+  footer{padding:30px 20px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    ToolsHub
+  </a>
+  <div class="nav-right">
+    <a href="/" class="back-btn">← All categories</a>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span id="breadcrumbCat">Category</span>
+  </div>
+  <div class="page-header-inner">
+    <div class="cat-icon-lg" id="catIconLg"></div>
+    <div>
+      <h1 class="page-title" id="pageTitle">Loading...</h1>
+      <p class="page-sub" id="pageSub"></p>
+      <div class="tools-count-badge" id="toolsCountBadge">0 tools</div>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="tools-grid" id="toolsGrid"></div>
+</section>
+
+<footer>
+  <div class="footer-copy">© <span id="year"></span> ToolsHub — Free AI-Powered Tools for Everyone</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+// ── CATEGORY META (même data que index.html) ──
+const CATEGORIES_META = {
+  immigration: { name:'Immigration & Visa',     desc:'Processing time trackers, visa calculators, document checklists.',  color:'#c8102e', emoji:'🌍' },
+  finance:     { name:'Finance & Money',         desc:'Salary calculators, loan simulators, tax estimators.',               color:'#00c896', emoji:'💰' },
+  legal:       { name:'Legal & Administrative',  desc:'Contract generators, rights checkers, administrative helpers.',      color:'#7b2fff', emoji:'⚖️' },
+  marketing:   { name:'Marketing & Business',    desc:'Ad generators, copywriting tools, ROI calculators.',                 color:'#ff6b35', emoji:'📈' },
+  health:      { name:'Health & Wellness',       desc:'BMI calculators, calorie trackers, wellness assessments.',           color:'#e879f9', emoji:'❤️' },
+  career:      { name:'Career & Education',      desc:'Resume analyzers, salary negotiation tools, study planners.',        color:'#63b3ed', emoji:'🎓' },
+  travel:      { name:'Travel & Expat',          desc:'Currency converters, cost of living comparators, visa checkers.',    color:'#38b2ac', emoji:'✈️' },
+  realestate:  { name:'Real Estate',             desc:'Mortgage calculators, rental yield calculators, property tools.',    color:'#48bb78', emoji:'🏠' },
+  tech:        { name:'Tech & Developers',       desc:'Code converters, regex testers, API formatters.',                    color:'#9f7aea', emoji:'💻' },
+  lifestyle:   { name:'Family & Lifestyle',      desc:'Budget planners, meal calculators, parenting tools.',                color:'#f6ad55', emoji:'🏡' },
+};
+
+// ── DETECT CATEGORY FROM URL ──
+// URL attendue : /tools/<slug>/  ou  /tools/<slug>/index.html
+function getCatSlug() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  // parts = ['tools', 'realestate'] ou ['tools', 'realestate', 'index.html']
+  if (parts[0] === 'tools' && parts[1]) return parts[1];
+  return null;
+}
+
+// ── RENDER ──
+async function init() {
+  const slug = getCatSlug();
+  const meta = slug ? CATEGORIES_META[slug] : null;
+
+  // Update page meta
+  if (meta) {
+    document.title = `ToolsHub — ${meta.name}`;
+    document.getElementById('breadcrumbCat').textContent = meta.name;
+    document.getElementById('pageTitle').textContent     = meta.name;
+    document.getElementById('pageSub').textContent       = meta.desc;
+    document.getElementById('catIconLg').innerHTML       = `<span style="font-size:2rem">${meta.emoji}</span>`;
+    document.getElementById('catIconLg').style.background = `${meta.color}20`;
+    document.getElementById('catIconLg').style.border     = `1px solid ${meta.color}30`;
+  }
+
+  // Fetch tools.json depuis la racine
+  let tools = [];
+  try {
+    const res = await fetch('/tools.json');
+    if (res.ok) {
+      const data = await res.json();
+      tools = (data.tools && slug && data.tools[slug]) || [];
+    }
+  } catch(e) {
+    console.warn('tools.json introuvable');
+  }
+
+  // Update count badge
+  const badge = document.getElementById('toolsCountBadge');
+  badge.textContent = `${tools.length} tool${tools.length !== 1 ? 's' : ''}`;
+
+  // Render grid
+  const grid = document.getElementById('toolsGrid');
+  grid.innerHTML = '';
+
+  if (tools.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔧</div>
+        <div class="empty-title">Coming soon</div>
+        <div class="empty-sub">Tools for this category are on the way.</div>
+      </div>`;
+    return;
+  }
+
+  const color = meta ? meta.color : '#63b3ed';
+
+  tools.forEach(tool => {
+    const card = document.createElement('a');
+    card.className = 'tool-card';
+    card.href      = `/tools/${slug}/${tool.slug}/index.html`;
+    card.innerHTML = `
+      <div class="tool-preview">
+        <div class="preview-accent" style="background:${color};"></div>
+        <span class="preview-icon">${meta ? meta.emoji : '🔧'}</span>
+      </div>
+      <div class="tool-body">
+        <div class="tool-name">${tool.name}</div>
+        <div class="tool-desc">${tool.description}</div>
+        <div class="tool-footer">
+          <span class="tool-lang">${tool.lang || 'en'}</span>
+          <span class="tool-arrow">↗</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── THEME ──
+function toggleTheme() {
+  const html  = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+function initTheme() {
+  const saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.querySelector('.theme-toggle').textContent = saved === 'dark' ? '🌙' : '☀️';
+}
+
+initTheme();
+init();
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

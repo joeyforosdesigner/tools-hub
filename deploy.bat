@@ -1,0 +1,1 @@
+node generate-tools.js && git add . && git commit -m Update && git push
